@@ -13,7 +13,7 @@ const Trending = () => {
         api_key: process.env.REACT_APP_TMDB_KEY,
       }
     }).then((response)=> {
-      console.log("datas => ", response.data.results)
+      // console.log("datas => ", response.data.results)
       setMovies(response.data.results)
     }) 
   })
@@ -25,20 +25,21 @@ const Trending = () => {
         <h1 className="text-white">TRENDING MOVIES</h1>
         <br />
         <Row>
+         
           {movies.map((result, index)=>{
             return (
-            <Col md={4} className="movieWrapper d-flex bg-dark" id="trending" key={index}>
-              <Card className="movieImage">
+            <Col md={4} className="d-flex my-3" id="trending" key={index}>
+              <Card className="movieImage h-100 bg-dark">
                 <Image src={`${process.env.REACT_APP_IMG_URL}/${result.poster_path}`} alt={result.title} className="images" />
                 <div className="bg-dark">
                   <Card.Body className='text-white'>
-                    <Card.Title className="text-center">{result.title}</Card.Title>
-                    <Card.Text className="text-left flex-fill">
-                      {result.overview}
+                    <Card.Title className="text-left">{result.title}</Card.Title>
+                    <Card.Text className="h-100">
+                      {result.overview.substring(0, 150)}...
                     </Card.Text>
-                    <Card.Text className="text-left flex-fill">
+                    <Card.Footer className="text-left h-100">
                       {result.release_date}
-                    </Card.Text>
+                    </Card.Footer>
                   </Card.Body>
                 </div>
               </Card>

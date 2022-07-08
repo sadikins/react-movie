@@ -25,7 +25,20 @@ body{
   .trending {
     height: auto;
     background: url("../assets/images/bg/scifi.jpg");
+    
+    
     background-size: cover;
+
+  }
+
+  .bg-img{
+    
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  
+  height: 100%; 
+  
+
   }
   
   .superhero {
@@ -36,17 +49,16 @@ body{
   
   .movieImage {
     height: auto;
-    background-color: black;
     margin: 5px;
     padding: 5px;
     transition: all  ease-out 0.3s;
+    
   }
 
   .movieImage:hover{
     box-shadow: -5px -1px 47px 0px rgba(71,216,235,0.74);
     -webkit-box-shadow: -5px -1px 47px 0px rgba(71,216,235,0.74);
     -moz-box-shadow: -5px -1px 47px 0px rgba(71,216,235,0.74);
-    padding: 5px;
     margin-top: -5px;
   }
 
