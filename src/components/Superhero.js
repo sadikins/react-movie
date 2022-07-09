@@ -1,12 +1,22 @@
+import {useEffect, useState} from 'react'
 import { Card, Container, Row, Col, Image } from "react-bootstrap"
-import antmanImage from "../assets/images/superhero/antman.jpg"
-import avengerImage from "../assets/images/superhero/avenger.jpg"
-import batmanImage from "../assets/images/superhero/batman.jpg"
-import robinhoodImage from "../assets/images/superhero/robinhood.jpg"
-import spidermanImage from "../assets/images/superhero/spiderman-cover.jpg"
-import supermanImage from "../assets/images/superhero/superman.jpg"
+import axios from 'axios'
 
 const SuperHero = () => {
+
+  const [films, setFilms] = useState([])
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_BASE_URL}/discover/movie`,{
+      params:{
+        api_key: process.env.REACT_APP_TMDB_KEY
+      }
+    }).then((response)=>{
+      // console.log(response)
+      setFilms(response.data.results)
+    })
+  })
+
   return (
     <div>
       <Container>
@@ -14,116 +24,30 @@ const SuperHero = () => {
         <h1 className="text-white">SUPERHERO MOVIES</h1>
         <br />
         <Row>
-          <Col md={4} className="movieWrapper" id="superhero">
+
+          {films.map((result, index)=>{
+            return (
+
+            
+            <Col md={4} className="movieWrapper" id="superhero" key={index}>
             <Card className="movieImage">
-              <Image src={antmanImage} alt="Dune Movies" className="images" />
+              <Image src={`${process.env.REACT_APP_IMG_URL}/${result.poster_path}`} alt={result.title} className="images" />
               <div className="bg-dark">
                 <div className="p-2 m-1 text-white">
-                  <Card.Title className="text-center">ANT MAN</Card.Title>
+                  <Card.Title className="text-center">{result.title}</Card.Title>
                   <Card.Text className="text-left">
-                    This is a wider card with natural lead-in to additional
-                    content
+                    {result.overview.substring(0, 150)}...
                   </Card.Text>
                   <Card.Text className="text-left">
-                    Last updated 5 mins ago
+                    {result.release_date}
                   </Card.Text>
                 </div>
               </div>
             </Card>
           </Col>
-          <Col md={4} className="movieWrapper">
-            <Card className="movieImage">
-              <Image src={avengerImage} alt="Dune Movies" className="images" />
-              <div className="bg-dark">
-                <div className="p-2 m-1 text-white">
-                  <Card.Title className="text-center">AVENGER</Card.Title>
-                  <Card.Text className="text-left">
-                    This is a wider card with natural lead-in to additional
-                    content
-                  </Card.Text>
-                  <Card.Text className="text-left">
-                    Last updated 3 mins ago
-                  </Card.Text>
-                </div>
-              </div>
-            </Card>
-          </Col>
-          <Col md={4} className="movieWrapper">
-            <Card className="movieImage">
-              <Image src={batmanImage} alt="Dune Movies" className="images" />
-              <div className="bg-dark">
-                <div className="p-2 m-1 text-white">
-                  <Card.Title className="text-center">THE BATMAN</Card.Title>
-                  <Card.Text className="text-left">
-                    This is a wider card with natural lead-in to additional
-                    content
-                  </Card.Text>
-                  <Card.Text className="text-left">
-                    Last updated 3 mins ago
-                  </Card.Text>
-                </div>
-              </div>
-            </Card>
-          </Col>
-          <Col md={4} className="movieWrapper">
-            <Card className="movieImage">
-              <Image
-                src={robinhoodImage}
-                alt="Dune Movies"
-                className="images"
-              />
-              <div className="bg-dark">
-                <div className="p-2 m-1 text-white">
-                  <Card.Title className="text-center">ROBIN HOOD</Card.Title>
-                  <Card.Text className="text-left">
-                    This is a wider card with natural lead-in to additional
-                    content
-                  </Card.Text>
-                  <Card.Text className="text-left">
-                    Last updated 3 mins ago
-                  </Card.Text>
-                </div>
-              </div>
-            </Card>
-          </Col>
-          <Col md={4} className="movieWrapper">
-            <Card className="movieImage">
-              <Image
-                src={spidermanImage}
-                alt="Dune Movies"
-                className="images"
-              />
-              <div className="bg-dark">
-                <div className="p-2 m-1 text-white">
-                  <Card.Title className="text-center">SPIDERMAN</Card.Title>
-                  <Card.Text className="text-left">
-                    This is a wider card with natural lead-in to additional
-                    content
-                  </Card.Text>
-                  <Card.Text className="text-left">
-                    Last updated 3 mins ago
-                  </Card.Text>
-                </div>
-              </div>
-            </Card>
-          </Col>
-          <Col md={4} className="movieWrapper">
-            <Card className="movieImage">
-              <Image src={supermanImage} alt="Dune Movies" className="images" />
-              <div className="bg-dark">
-                <div className="p-2 m-1 text-white">
-                  <Card.Title className="text-center">SUPERMAN HERO</Card.Title>
-                  <Card.Text className="text-left">
-                    This is a wider card with natural lead-in to additional
-                    content
-                  </Card.Text>
-                  <Card.Text className="text-left">
-                    Last updated 3 mins ago
-                  </Card.Text>
-                </div>
-              </div>
-            </Card>
-          </Col>
+          )
+          })}
+          
         </Row>
       </Container>
     </div>

@@ -8,12 +8,12 @@ const Trending = () => {
 
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BASE_URL}/discover/movie`, {
+    axios.get(`${process.env.REACT_APP_BASE_URL}/trending/all/day`, {
       params: {
         api_key: process.env.REACT_APP_TMDB_KEY,
       }
     }).then((response)=> {
-      // console.log("datas => ", response.data.results)
+      console.log("datas => ", response.data.results)
       setMovies(response.data.results)
     }) 
   })
@@ -38,7 +38,7 @@ const Trending = () => {
                       {result.overview.substring(0, 150)}...
                     </Card.Text>
                     <Card.Footer className="text-left h-100">
-                      {result.release_date}
+                      {result.release_date ? result.release_date : result.first_air_date}
                     </Card.Footer>
                   </Card.Body>
                 </div>
